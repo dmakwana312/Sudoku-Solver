@@ -34,6 +34,9 @@ class Board:
 
         return False
     
+    def insert(self, num, pos):
+        self.board[pos[0][1]] = num
+    
 
 
     
