@@ -43,6 +43,26 @@ class Board:
 class Solver():
 
     
+    def __init__( self, board):
+        self.board = board
+
+    def solve(self):
+        
+        if not self.board.findEmpty():
+            return True
+        else:
+            row, col = self.board.findEmpty()
+        for val in range(0, 10):
+            if valid(val, (row, col)):
+                self.board.insert(val, (row, col))
+
+                if solve():
+                    return True
+                
+                self.board.insert(0, (row, col))
+
+        return False
+
                 
 
     def valid(self, num, pos):
