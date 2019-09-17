@@ -31,8 +31,40 @@ class Board:
             for col in range(len(self.board[0])):
                 if self.board[row][col] == 0:
                     return (row, col) 
+
+        return False
+    
+
+
+    
+class Solver():
+
+    
                 
 
+    def valid(self, num, pos):
+
+        for row in range(len(self.board[0])):
+            if self.board[pos[0][row]] == num and pos[1] != row:
+                return False
+
+        for col in range(len(self.board)):
+            if self.board[col][pos[1]] == num and pos[0] != col:
+                return False       
+
+        box_X = pos[1] // 3
+        box_Y = pos[0] // 3
+
+        for row in range(box_Y * 3, box_Y * 3 + 3):
+            for col in range(box_X * 3, box_X * 3 + 3):
+                if self.board[row][col] == num and (row, col) != pos:
+                    return False
+
+        return True
+
+
+
+    
 
 
        
