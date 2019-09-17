@@ -26,7 +26,13 @@ class Board:
                 else: 
                     print(str(self.board[row][col]) + " ", end="")
                 
-            
+    def find_Empty(self):
+        for row in range(len(self.board)):
+            for col in range(len(self.board[0])):
+                if self.board[row][col] == 0:
+                    return (row, col) 
+                
+
 
 
        
