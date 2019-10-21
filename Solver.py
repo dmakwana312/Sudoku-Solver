@@ -1,11 +1,13 @@
 class Board:
+
+    # Board array is initialised
     board = [[0 for col in range(0,9)] for row in range(0,9)]
     
+    # Function to print board
     def print_Board(self):
         
         for row in range(len(self.board)):
-            
-                
+             
             if row % 3==0 and row != 0 and row != len(self.board):
                 print("- - - - - - - - - - -")
             for col in range(len(self.board[0])):
@@ -23,7 +25,8 @@ class Board:
                         print(str(self.board[row][col]) + " ", end="")
                     else:
                         print(" " + " ", end="")
-                
+
+    # Function to find empty places on the board            
     def find_Empty(self):
         for row in range(len(self.board)):
             for col in range(len(self.board[0])):
@@ -32,6 +35,7 @@ class Board:
 
         return False
 
+    # Function used to input board
     def board_Input(self):
        
         row = 0
@@ -47,10 +51,8 @@ class Board:
             else:
                 print("\nENTER ROW AGAIN")
                 row = current_Row
-                
 
-        
-
+    # Validating row that is inputted by user            
     def board_Input_Validation(self, input):
         try:
         
@@ -63,18 +65,16 @@ class Board:
             print("\nERROR: MAKE SURE ROW ENTRY ONLY CONTAINS NUMBERS")
             return False
     
+    # Function to insert single digit into a specific place on the board
     def insert(self, num, pos):
         self.board[pos[0]][pos[1]] = num
-    
-
-
-    
+        
 class Solver():
 
-    
     def __init__(self, board):
         self.board = board
 
+    # Backtracking algorithm implemented through this function
     def solve(self):
         
         if not self.board.find_Empty():
@@ -92,8 +92,7 @@ class Solver():
 
         return False
 
-                
-
+    # Function to check if inserted digit is valid
     def valid(self, num, pos):
 
         for row in range(len(self.board.board[0])):
@@ -115,12 +114,10 @@ class Solver():
 
         return True
 
-
 board = Board()
 solver = Solver(board)
 
-
-
+# Loop to keep the program running
 while True:
     menu_Option = input("\n1. Enter Sudoku Board\n2. Exit\nEnter 1 or 2: ")
     if menu_Option == "1":
@@ -140,8 +137,7 @@ while True:
                         print("\nBoard That Was Entered Is Not Valid")
                         board_Valid = False
                         break
-                    
-                        
+ 
             if not board_Valid:
                 break
 
@@ -155,8 +151,3 @@ while True:
         quit()
     else:
         print("\nEnter Valid Menu Option")
-    
-    
-
-
- 
