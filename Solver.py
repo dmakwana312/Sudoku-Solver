@@ -1,13 +1,5 @@
 class Board:
-    board = [[7,8,0,4,0,0,1,2,0],
-            [6,0,0,0,7,5,0,0,9],
-            [0,0,0,6,0,1,0,7,8],
-            [0,0,7,0,4,0,2,6,0],
-            [0,0,1,0,5,0,9,3,0],
-            [9,0,4,0,6,0,0,0,5],
-            [0,7,0,3,0,0,0,1,2],
-            [1,2,0,0,0,7,4,0,0],
-            [0,4,9,2,0,6,0,0,7]]
+    board = [[0 for col in range(0,9)] for row in range(0,9)]
     
     def print_Board(self):
         
@@ -21,10 +13,16 @@ class Board:
                     print("| ", end="")
                 
                 if col== 8:
-                    print(self.board[row][col])
+                    if self.board[row][col] != 0:
+                        print(self.board[row][col])
+                    else:
+                        print(" ")
 
                 else: 
-                    print(str(self.board[row][col]) + " ", end="")
+                    if self.board[row][col] != 0:
+                        print(str(self.board[row][col]) + " ", end="")
+                    else:
+                        print(" " + " ", end="")
                 
     def find_Empty(self):
         for row in range(len(self.board)):
@@ -33,6 +31,37 @@ class Board:
                     return (row, col)  # row, col
 
         return False
+
+    def board_Input(self):
+       
+        row = 0
+        while row < 9:
+            current_Row = row
+            row_Input = input("\nEnter row " + str(row+1) + ":")
+            if self.board_Input_Validation(row_Input):
+                str_row_Input = str(row_Input)
+                for col in range(len(str_row_Input)):
+                    self.insert(int(str_row_Input[col]), (row, col))
+                row += 1
+
+            else:
+                print("\nENTER ROW AGAIN")
+                row = current_Row
+                
+
+        
+
+    def board_Input_Validation(self, input):
+        try:
+        
+            if len(input) == 9:
+                return True
+            else:
+                print("\nERROR: MAKE SURE ROW ENTRY HAS 9 DIGITS (REPLACE BLANK SPACES WITH 0)")
+                return False
+        except ValueError:
+            print("\nERROR: MAKE SURE ROW ENTRY ONLY CONTAINS NUMBERS")
+            return False
     
     def insert(self, num, pos):
         self.board[pos[0]][pos[1]] = num
@@ -43,7 +72,7 @@ class Board:
 class Solver():
 
     
-    def __init__( self, board):
+    def __init__(self, board):
         self.board = board
 
     def solve(self):
@@ -87,22 +116,47 @@ class Solver():
         return True
 
 
-
-    
-
-
-       
-    
 board = Board()
+solver = Solver(board)
 
-print("Sudoku")
-board.print_Board()
-print( " ")
 
-solver = Solver(board).solve()
 
-print("Solution")
-board.print_Board()
+while True:
+    menu_Option = input("\n1. Enter Sudoku Board\n2. Exit\nEnter 1 or 2: ")
+    if menu_Option == "1":
+        print("\nEnter each row without spaces when prompted \nFor Example: \n1   3 |   5 6 | 7   8 would be entered as 103056708 with the empty spaces represented as 0\n")
+        board.board_Input()
+
+        print("\nYour Input\n")
+        board.print_Board()
+
+        board_Valid = True
+        for row in range(9):
+            
+            for col in range(9):
+                if board.board[row][col] != 0:
+                    if not solver.valid(board.board[row][col], (row, col)):
+                        
+                        print("\nBoard That Was Entered Is Not Valid")
+                        board_Valid = False
+                        break
+                    
+                        
+            if not board_Valid:
+                break
+
+        if board_Valid:
+            print("\nSolution\n")
+            solver.solve()
+            board.print_Board()
+        
+    elif menu_Option == "2":
+        print("\nThank you for using this solver")
+        quit()
+    else:
+        print("\nEnter Valid Menu Option")
+    
+    
 
 
  
